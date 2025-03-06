@@ -28,6 +28,26 @@ This project analyzes **pizza sales data** using **MySQL for data processing** a
   - `quantity` – Number of pizzas sold per order  
   - `total_price` – Total price of the order  
 
+## 🛠 Several key SQL Queries  
+
+### **1. Sum of Total Price**  
+
+`SELECT SUM(total_price) AS Sum_Of_TotalPrice FROM PizzaDB.pizza_sales;`
+
+### **2. Average Order Value
+`SELECT SUM(total_price) / COUNT(DISTINCT order_id) AS Order_value FROM PizzaDB.pizza_sales;`
+
+### **3. Average Pizza Per Order
+`SELECT CAST(SUM(quantity)/COUNT(DISTINCT order_id) AS DECIMAL(10,2)) AS Pizza_per_Order FROM PizzaDB.pizza_sales;`
+
+### **4. Weekly Trend for Total Orders
+`SELECT WEEK(order_time, 3) AS Week_Number, YEAR(order_time) AS Order_Year,
+       COUNT(DISTINCT order_id) AS Pizza_Order 
+FROM PizzaDB.pizza_sales
+GROUP BY YEAR(order_time), WEEK(order_time, 3)
+ORDER BY YEAR(order_time), WEEK(order_time, 3);`
+
+
 
  ## 📊 Tableau Dashboard Creation  
 
