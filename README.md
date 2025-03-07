@@ -48,6 +48,26 @@ GROUP BY YEAR(order_time), WEEK(order_time, 3)
 ORDER BY YEAR(order_time), WEEK(order_time, 3);`
 
 
+### **5. Percentage of Sales by Pizza Size
+
+`SELECT pizza_size, CAST(SUM(total_price) AS DECIMAL (10,2)) AS Total_sales, 
+       CAST(SUM(total_price) * 100 / 
+       (SELECT SUM(total_price) FROM PizzaDB.pizza_sales 
+        WHERE EXTRACT(QUARTER FROM temp_order_date) = 1) AS DECIMAL(10,2)) AS PCT
+FROM PizzaDB.pizza_sales
+WHERE EXTRACT(QUARTER FROM temp_order_date) = 1
+GROUP BY pizza_size
+ORDER BY pizza_size;`
+
+### **6. Top 5 Best Sellers by Revenue, Quantity, and Orders
+`SELECT pizza_name, SUM(quantity) AS Pizza_quantity, 
+       COUNT(DISTINCT order_id) AS Order_number, SUM(total_price) AS total_price 
+FROM PizzaDB.pizza_sales
+GROUP BY pizza_name
+ORDER BY total_price DESC 
+LIMIT 5;`
+
+
 
 
 
